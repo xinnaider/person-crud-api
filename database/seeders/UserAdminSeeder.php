@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use App\Models\Person;
+use Illuminate\Support\Facades\DB;
 
 class UserAdminSeeder extends Seeder
 {
@@ -13,6 +14,11 @@ class UserAdminSeeder extends Seeder
      */
     public function run(): void
     {
+        if (DB::table('users')->where('email', 'admin@admin.com')->exists()) {
+            $this->command->info('Admin user já existe.');
+            return;
+        }
+
         $person = Person::create([
             'name' => 'John Doe',
             'title' => 'Mr.',
